@@ -38,7 +38,7 @@ const wordSchema = new mongoose.Schema({
   },
 });
 
-wordSchema.virtual('hitRate').get(function () {
+wordSchema.virtual('accuracy').get(function () {
   return this.correctFlash / this.totalFlash;
 });
 
