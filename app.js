@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 
 const wordRouter = require('./routers/wordRouter');
+const quizRouter = require('./routers/quizRouter');
 
 // Start express app
 const app = express();
@@ -24,5 +25,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/words', wordRouter);
+app.use('/api/v1/quizzes', quizRouter);
 
 module.exports = app;
