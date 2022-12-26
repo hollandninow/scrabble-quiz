@@ -4,5 +4,5 @@ const factory = require('./handlerFactory');
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 exports.createUser = factory.createOne(User);
-exports.updateUser = factory.updateOne(User);
+exports.updateUser = factory.updateOne(User); // NOT for updating passwords
 exports.deleteUser = factory.deleteOne(User);
