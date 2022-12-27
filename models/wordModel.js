@@ -23,6 +23,9 @@ const wordSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    wordLength: {
+      type: Number,
+    },
     // Tags for special word lists
     vowelHeavy: Boolean,
     greekAlphabet: Boolean,
@@ -43,6 +46,12 @@ const wordSchema = new mongoose.Schema(
 
 wordSchema.virtual('accuracy').get(function () {
   return this.correctFlash / this.totalFlash;
+});
+
+wordSchema.pre('save', function (next) {
+  this.wordLength = this.word.length;
+
+  next();
 });
 
 const Word = mongoose.model('Word', wordSchema);

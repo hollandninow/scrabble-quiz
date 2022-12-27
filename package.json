@@ -2,9 +2,11 @@
   "name": "scrabble-quiz",
   "version": "1.0.0",
   "description": "Flash card quiz app to train Scrabble words",
+  "engines": {
+    "node": ">=8.3.0"
+  },
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
   "author": "Holland Ninow",
