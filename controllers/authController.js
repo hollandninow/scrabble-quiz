@@ -222,3 +222,23 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // 3) Log the user in
   createSendToken(user, 200, req, res);
 });
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // 1) Get user from collection
+  console.log(req.user);
+  const user = await User.findById(req.user._id).select('+password');
+
+  // 2) Check if PATCHed current password is correct
+  const { passwordCurrent } = req.body;
+
+  if (!(await user.correctPassword(passwordCurrent, user.password)))
+    return next(new AppError('Please enter the correct password', 401));
+
+  // 3) If correct, update password
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+
+  // 4) Log user in
+  createSendToken(user, 200, req, res);
+});
