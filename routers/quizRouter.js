@@ -14,4 +14,8 @@ router
   .patch(quizController.updateQuiz)
   .delete(quizController.deleteQuiz);
 
+router
+  .route('/generateQuiz/:quizType/:quizLength')
+  .get(quizController.getGeneratedQuiz);
+
 module.exports = router;

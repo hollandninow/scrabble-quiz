@@ -27,10 +27,12 @@ const validThreeLetterWords = JSON.parse(
 
 validTwoLetterWords.forEach((word) => {
   word.valid = true;
+  word.tags = ['2-letter'];
 });
 
 validThreeLetterWords.forEach((word) => {
   word.valid = true;
+  word.tags = ['3-letter'];
 });
 
 const validWords = [...validTwoLetterWords, ...validThreeLetterWords];

@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
 
+const quizTypes = [
+  '2-letter',
+  '3-letter',
+  'no-vowels',
+  'Q-without-U',
+  'Q-words',
+  'J-words',
+  'X-words',
+  'Z-words',
+  'vowel-heavy',
+  'multiple-I-and-U',
+  'greek-alphabet',
+  'hebrew-alphabet',
+  'legal-proper-names',
+  'legal-place-names',
+];
+
 const quizSchema = new mongoose.Schema(
   {
     quizLength: {
@@ -8,22 +25,7 @@ const quizSchema = new mongoose.Schema(
     },
     quizType: {
       type: String,
-      values: [
-        '2-letter',
-        '3-letter',
-        'no-vowels',
-        'Q-without-U',
-        'Q-words',
-        'J-words',
-        'X-words',
-        'Z-words',
-        'vowel-heavy',
-        'multiple-I-and-U',
-        'greek-alphabet',
-        'hebrew-alphabet',
-        'legal-proper-names',
-        'legal-place-names',
-      ],
+      enum: quizTypes,
       required: [true, 'Quiz must have a quiz type'],
     },
     createdAt: {
@@ -53,6 +55,10 @@ const quizSchema = new mongoose.Schema(
 quizSchema.virtual('score').get(function () {
   return this.correctAnswers / this.quizLength;
 });
+
+quizSchema.methods.isValidQuizType = function (candidateQuizType) {
+  return quizTypes.includes(candidateQuizType);
+};
 
 const Quiz = mongoose.model('Quiz', quizSchema);
 

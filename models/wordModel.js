@@ -27,12 +27,7 @@ const wordSchema = new mongoose.Schema(
       type: Number,
     },
     // Tags for special word lists
-    vowelHeavy: Boolean,
-    greekAlphabet: Boolean,
-    hebrewAlphabet: Boolean,
-    monetaryUnit: Boolean,
-    legalPlaceName: Boolean,
-    legalProperName: Boolean,
+    tags: [String],
   },
   {
     toJSON: {
