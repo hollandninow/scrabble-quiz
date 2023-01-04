@@ -14,8 +14,15 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
   const { quizType } = req.params;
   const quizLength = +req.params.quizLength;
 
-  if (quizLength > 100)
-    return next(new AppError('Quiz length too large. Please try again.', 400));
+  const maxQuizLength = process.env.MAX_QUIZ_LENGTH || 100;
+
+  if (quizLength > maxQuizLength)
+    return next(
+      new AppError(
+        `Quiz length too large. Please try again with size equal to or less than ${maxQuizLength}`,
+        400
+      )
+    );
 
   const generatedQuiz = await Word.aggregate([
     {
