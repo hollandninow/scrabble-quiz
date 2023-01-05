@@ -1,8 +1,11 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const quizRouter = require('./quizRouter');
 
 const router = express.Router();
+
+router.use('/:userId/quizzes', quizRouter);
 
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);

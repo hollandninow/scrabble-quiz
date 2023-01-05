@@ -36,11 +36,11 @@ const quizSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    // user: {
-    //   type: mongoose.Schema.ObjectId,
-    //   ref: 'User',
-    //   required: [true, 'Quiz must belong to a user'],
-    // },
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
+      required: [true, 'Quiz must belong to a user'],
+    },
   },
   {
     toJSON: {
