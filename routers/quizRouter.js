@@ -11,14 +11,17 @@ router
   .get(authController.restrictTo('admin'), quizController.getAllQuizzes)
   .post(authController.restrictTo('admin'), quizController.createQuiz);
 
+router.get('/myQuizStats', quizController.getMyQuizStats);
+
 router
   .route('/:id')
   .get(authController.restrictTo('admin'), quizController.getQuiz)
   .patch(authController.restrictTo('admin'), quizController.updateQuiz)
   .delete(authController.restrictTo('admin'), quizController.deleteQuiz);
 
-router
-  .route('/generateQuiz/:quizType/:quizLength')
-  .get(quizController.getGeneratedQuiz);
+router.get(
+  '/generateQuiz/:quizType/:quizLength',
+  quizController.getGeneratedQuiz
+);
 
 module.exports = router;

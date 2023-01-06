@@ -55,3 +55,72 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getMyQuizStats = catchAsync(async (req, res, next) => {
+  // What to show:
+  // # of quizzes taken by quiz type and total
+  // avg score of quizzes by quiz type and total
+  // total # of words guessed, total # of words guessed correctly - by quiz type and total
+
+  const stats = await Quiz.aggregate([
+    {
+      $facet: {
+        statsByQuiz: [
+          {
+            $match: { user: req.user._id },
+          },
+          {
+            $group: {
+              _id: '$quizType',
+              totalQuizzes: { $count: {} },
+              correctAnswers: { $sum: '$correctAnswers' },
+              wordsQuizzed: { $sum: '$quizLength' },
+              avgQuizLength: { $avg: '$quizLength' },
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              totalQuizzes: 1,
+              correctAnswers: 1,
+              wordsQuizzed: 1,
+              avgQuizLength: 1,
+              avgScore: { $divide: ['$correctAnswers', '$wordsQuizzed'] },
+            },
+          },
+        ],
+        statsTotal: [
+          {
+            $match: { user: req.user._id },
+          },
+          {
+            $group: {
+              _id: null,
+              totalQuizzes: { $count: {} },
+              correctAnswers: { $sum: '$correctAnswers' },
+              wordsQuizzed: { $sum: '$quizLength' },
+              avgQuizLength: { $avg: '$quizLength' },
+            },
+          },
+          {
+            $project: {
+              _id: 1,
+              totalQuizzes: 1,
+              correctAnswers: 1,
+              wordsQuizzed: 1,
+              avgQuizLength: 1,
+              avgScore: { $divide: ['$correctAnswers', '$wordsQuizzed'] },
+            },
+          },
+        ],
+      },
+    },
+  ]);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      stats,
+    },
+  });
+});
