@@ -24,7 +24,7 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
       )
     );
 
-  const generatedQuiz = await Word.aggregate([
+  const wordList = await Word.aggregate([
     {
       $match: {
         tags: { $in: [quizType] },
@@ -47,13 +47,82 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
     },
   ]);
 
+  const quizObj = {
+    wordList,
+    token: req.token,
+    quizType,
+    quizLength,
+  };
+
   res.status(200).json({
     status: 'success',
-    results: generatedQuiz.length,
+    results: quizObj.length,
     data: {
-      generatedQuiz,
+      quizObj,
     },
   });
+});
+
+// Assumes that the quiz submitted by the user is just a modified quizObj (from getGenereatedQuiz) where each obj in the array has an additional property "answer"=boolean. array e.g.:
+// [{
+//     "word": "rut",
+//     "valid": true,
+//     "answer": true,
+// },
+// {
+//     "word": "del",
+//     "valid": true
+//     "answer": false,
+// },
+//]
+exports.markQuiz = catchAsync(async (req, res, next) => {
+  const { wordList, quizType, quizLength } = req.body;
+
+  const quizResult = wordList.map(({ word, valid, answer }) => ({
+    word,
+    correct: valid === answer,
+  }));
+
+  const correctWordArray = [];
+  const incorrectWordArray = [];
+
+  quizResult.forEach(({ word, correct }) =>
+    correct ? correctWordArray.push(word) : incorrectWordArray.push(word)
+  );
+
+  await Word.updateMany(
+    {
+      word: {
+        $in: correctWordArray,
+      },
+    },
+    {
+      $inc: { correctFlash: 1, totalFlash: 1 },
+    }
+  );
+
+  await Word.updateMany(
+    {
+      word: {
+        $in: incorrectWordArray,
+      },
+    },
+    {
+      $inc: { totalFlash: 1 },
+    }
+  );
+
+  console.log(req.body);
+
+  req.body = {
+    quizLength,
+    quizType,
+    correctAnswers: correctWordArray.length,
+    user: req.user._id,
+  };
+
+  console.log(req.body);
+  next();
 });
 
 exports.getMyQuizStats = catchAsync(async (req, res, next) => {

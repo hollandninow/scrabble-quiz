@@ -1,6 +1,7 @@
 const express = require('express');
 const quizController = require('../controllers/quizController');
 const authController = require('../controllers/authController');
+const quizAuthController = require('../controllers/quizAuthController');
 
 const router = express.Router({ mergeParams: true });
 
@@ -21,7 +22,15 @@ router
 
 router.get(
   '/generateQuiz/:quizType/:quizLength',
+  quizAuthController.generateQuizToken,
   quizController.getGeneratedQuiz
+);
+
+router.post(
+  '/markQuiz',
+  // quizAuthController.authenticateQuiz,
+  quizController.markQuiz,
+  quizController.createQuiz
 );
 
 module.exports = router;
