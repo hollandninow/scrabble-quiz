@@ -28,4 +28,22 @@ exports.generateQuizToken = catchAsync(async (req, res, next) => {
   next();
 });
 
-// exports.authenticateQuiz = catchAsync(async (req, res, next) => {});
+exports.authenticateQuiz = catchAsync(async (req, res, next) => {
+  const { token } = req.body;
+
+  const decodedToken = jwt.verify(token, process.env.QUIZ_JWT_SECRET);
+
+  const user = await User.findById(req.user._id);
+
+  if (!user) next(new AppError('User not found, please log in again.', 400));
+
+  if (
+    user.quizTokens.includes(token) &&
+    decodedToken.quizType === req.body.quizType &&
+    parseInt(decodedToken.quizLength, 10) === req.body.quizLength
+  )
+    req.body.authenticated = true;
+  else req.body.authenticated = false;
+
+  next();
+});

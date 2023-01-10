@@ -28,7 +28,7 @@ router.get(
 
 router.post(
   '/markQuiz',
-  // quizAuthController.authenticateQuiz,
+  quizAuthController.authenticateQuiz,
   quizController.markQuiz,
   quizController.createQuiz
 );

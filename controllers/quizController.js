@@ -76,7 +76,7 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
 // },
 //]
 exports.markQuiz = catchAsync(async (req, res, next) => {
-  const { wordList, quizType, quizLength } = req.body;
+  const { wordList, quizType, quizLength, authenticated } = req.body;
 
   const quizResult = wordList.map(({ word, valid, answer }) => ({
     word,
@@ -90,29 +90,29 @@ exports.markQuiz = catchAsync(async (req, res, next) => {
     correct ? correctWordArray.push(word) : incorrectWordArray.push(word)
   );
 
-  await Word.updateMany(
-    {
-      word: {
-        $in: correctWordArray,
+  if (authenticated) {
+    await Word.updateMany(
+      {
+        word: {
+          $in: correctWordArray,
+        },
       },
-    },
-    {
-      $inc: { correctFlash: 1, totalFlash: 1 },
-    }
-  );
+      {
+        $inc: { correctFlash: 1, totalFlash: 1 },
+      }
+    );
 
-  await Word.updateMany(
-    {
-      word: {
-        $in: incorrectWordArray,
+    await Word.updateMany(
+      {
+        word: {
+          $in: incorrectWordArray,
+        },
       },
-    },
-    {
-      $inc: { totalFlash: 1 },
-    }
-  );
-
-  console.log(req.body);
+      {
+        $inc: { totalFlash: 1 },
+      }
+    );
+  }
 
   req.body = {
     quizLength,
@@ -121,7 +121,6 @@ exports.markQuiz = catchAsync(async (req, res, next) => {
     user: req.user._id,
   };
 
-  console.log(req.body);
   next();
 });
 
