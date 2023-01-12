@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -107,6 +108,22 @@ userSchema.methods.createPasswordResetToken = function () {
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
   return resetToken;
+};
+
+userSchema.methods.deleteOldQuizTokens = function () {
+  const newQuizTokens = [];
+
+  this.quizTokens.forEach(async (token) => {
+    try {
+      await jwt.verify(token, process.env.QUIZ_JWT_SECRET, (err, decoded) => {
+        if (decoded) newQuizTokens.push(token);
+      });
+    } catch (err) {
+      // no need to throw an error, we are just cleaning up here...
+    }
+  });
+
+  this.quizTokens = newQuizTokens;
 };
 
 const User = mongoose.model('User', userSchema);

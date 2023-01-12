@@ -22,6 +22,14 @@ exports.generateQuizToken = catchAsync(async (req, res, next) => {
   if (!user)
     return next(new AppError('User is not logged in or does not exist.'), 400);
 
+  // Clean up tokens before adding a new one
+
+  console.log('before', user.quizTokens);
+
+  user.deleteOldQuizTokens();
+
+  console.log('after', user.quizTokens);
+
   user.quizTokens.push(token);
   await user.save({ validateBeforeSave: false });
 
