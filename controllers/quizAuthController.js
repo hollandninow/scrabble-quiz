@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
-// const Quiz = require('../models/quizModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -23,13 +22,9 @@ exports.generateQuizToken = catchAsync(async (req, res, next) => {
     return next(new AppError('User is not logged in or does not exist.'), 400);
 
   // Clean up tokens before adding a new one
-
-  console.log('before', user.quizTokens);
-
   user.deleteOldQuizTokens();
 
-  console.log('after', user.quizTokens);
-
+  // Add new quiz token
   user.quizTokens.push(token);
   await user.save({ validateBeforeSave: false });
 
@@ -52,6 +47,12 @@ exports.authenticateQuiz = catchAsync(async (req, res, next) => {
   )
     req.body.authenticated = true;
   else req.body.authenticated = false;
+
+  // Remove the token that was just used
+  const index = user.quizTokens.indexOf(token);
+  if (index > -1) user.quizTokens.splice(index, 1);
+
+  user.save({ validateBeforeSave: false });
 
   next();
 });
