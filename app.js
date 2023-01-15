@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const compression = require('compression');
 const cors = require('cors');
 
+const viewsRouter = require('./routers/viewsRouter');
 const wordRouter = require('./routers/wordRouter');
 const quizRouter = require('./routers/quizRouter');
 const userRouter = require('./routers/userRouter');
@@ -66,10 +67,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.status(200).send('Hello!');
-});
-
+app.use('/', viewsRouter);
 app.use('/api/v1/words', wordRouter);
 app.use('/api/v1/quizzes', quizRouter);
 app.use('/api/v1/users', userRouter);
