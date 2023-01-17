@@ -27,7 +27,25 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors());
 app.options('*', cors());
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
+        baseUri: ["'self'"],
+        fontSrc: ["'self'", 'https:', 'data:'],
+        scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
+        frameSrc: ["'self'", 'https:', "'unsafe-inline'"],
+        workerSrc: ["'self'", 'data:', 'blob:'],
+      },
+      childSrc: ["'self'", 'blob:'],
+      imgSrc: ["'self'", 'data:', 'blob:'],
+      formAction: ["'self'"],
+      connectSrc: ["'self'", "'unsafe-inline'", 'data:', 'blob:'],
+      upgradeInsecureRequests: [],
+    },
+  })
+);
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
