@@ -4,8 +4,8 @@
 const catchAsync = require('../utils/catchAsync');
 // const AppError = require('../utils/appError');
 
-exports.getHomePage = catchAsync(async (req, res, next) => {
-  res.status(200).render('base', {
-    title: 'Home',
+exports.getAppView = catchAsync(async (req, res, next) => {
+  res.status(200).render('app', {
+    title: 'App',
   });
 });
