@@ -531,7 +531,8 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"8Lnzc":[function(require,module,exports) {
-/* eslint-disable */ 
+/* eslint-disable */ "use strict";
+
 },{}]},["iOd8G","8Lnzc"], "8Lnzc", "parcelRequire9ded")
 
 //# sourceMappingURL=index.js.map

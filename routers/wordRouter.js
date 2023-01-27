@@ -4,12 +4,18 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.use(authController.protect);
-
+// Temporary non-protected routes to figure out testing
 router
   .route('/')
-  .get(authController.restrictTo('user', 'admin'), wordController.getAllWords)
-  .post(authController.restrictTo('admin'), wordController.createWord);
+  .get(wordController.getAllWords)
+  .post(wordController.createWord);
+
+// router.use(authController.protect);
+
+// router
+//   .route('/')
+//   .get(authController.restrictTo('user', 'admin'), wordController.getAllWords)
+//   .post(authController.restrictTo('admin'), wordController.createWord);
 
 router
   .route('/:id')

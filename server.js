@@ -3,10 +3,21 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+let DB = '';
+if (process.env.NODE_ENV === 'testing') {
+  DB = process.env.DATABASE_TEST.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_TEST_PASSWORD
+  );
+} else if (
+  process.env.NODE_ENV === 'development' ||
+  process.env.NODE_ENV === 'production'
+) {
+  DB = process.env.DATABASE.replace(
+    '<PASSWORD>',
+    process.env.DATABASE_PASSWORD
+  );
+}
 
 mongoose.set('strictQuery', false);
 

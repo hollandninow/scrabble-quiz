@@ -1,6 +1,15 @@
 {
-  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
-  "plugins": ["prettier"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "plugin:node/recommended",
+    "plugin:chai-friendly/recommended",
+    "plugin:mocha/recommended"
+  ],
+  "env": {
+    "mocha": true
+  },
+  "plugins": ["prettier", "chai-friendly", "mocha"],
   "rules": {
     "prettier/prettier": [
       "error",
@@ -19,7 +28,13 @@
     "no-underscore-dangle": "off",
     "class-methods-use-this": "off",
     "prefer-destructuring": ["error", { "object": true, "array": false }],
-    "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }]
+    "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|val" }],
+    "node/no-unpublished-require": [
+      "error",
+      {
+        "allowModules": ["supertest", "chai"]
+      }
+    ]
   },
   "parserOptions": {
     "sourceType": "module"
