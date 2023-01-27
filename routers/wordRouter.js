@@ -10,6 +10,12 @@ router
   .get(wordController.getAllWords)
   .post(wordController.createWord);
 
+router
+  .route('/:id')
+  .get(wordController.getWord)
+  .patch(wordController.updateWord)
+  .delete(wordController.deleteWord);
+
 // router.use(authController.protect);
 
 // router
@@ -17,10 +23,10 @@ router
 //   .get(authController.restrictTo('user', 'admin'), wordController.getAllWords)
 //   .post(authController.restrictTo('admin'), wordController.createWord);
 
-router
-  .route('/:id')
-  .get(authController.restrictTo('user', 'admin'), wordController.getWord)
-  .patch(authController.restrictTo('admin'), wordController.updateWord)
-  .delete(authController.restrictTo('admin'), wordController.deleteWord);
+// router
+//   .route('/:id')
+//   .get(authController.restrictTo('user', 'admin'), wordController.getWord)
+//   .patch(authController.restrictTo('admin'), wordController.updateWord)
+//   .delete(authController.restrictTo('admin'), wordController.deleteWord);
 
 module.exports = router;
