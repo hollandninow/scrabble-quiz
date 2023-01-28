@@ -15,25 +15,35 @@ const adminTestUser = {
   password: process.env.ADMIN_TEST_PASSWORD,
 };
 
-let jwt;
+let token;
 
 describe('authentication', () => {
-  describe('logging in', () => {
+  describe('logging in and out', () => {
     it('should log in when provided credentials for an existing user', (done) => {
       request
         .post('api/v1/users/login')
         .send(adminTestUser)
         .expect(200)
         .then((res) => {
-          expect(res.body.data.user.email).to.be.equal(adminTestUser.email);
+          // eslint-disable-next-line prefer-destructuring
+          token = res.body.token;
 
-          jwt = res.body.token;
+          expect(res.body.data.user.email).to.be.equal(adminTestUser.email);
 
           done();
         })
-        .catch((err) => {
-          done(err);
-        });
+        .catch((err) => done(err));
+    });
+
+    it('should log out the user', (done) => {
+      request
+        .post('api/v1/users/logout')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          done();
+        })
+        .catch((err) => done(err));
     });
   });
 });
