@@ -4,12 +4,9 @@ const supertest = require('supertest');
 const { expect } = require('chai');
 const dotenv = require('dotenv');
 
-dotenv.config({ path: './config.env' });
+dotenv.config({ path: '../config.env' });
 
-// const User = require('../models/userModel');
-// const Word = require('../models/wordModel');
-
-const url = 'http://127.0.0.1:3000';
+const url = `http://127.0.0.1:${process.env.PORT}/`;
 
 const request = supertest(url);
 
@@ -21,7 +18,7 @@ describe('words', () => {
   describe('POST words', () => {
     it('should create a word', (done) => {
       request
-        .post('/api/v1/words')
+        .post('api/v1/words')
         .send({
           word: 'test',
           valid: 'true',
@@ -40,7 +37,7 @@ describe('words', () => {
   describe('GET words', () => {
     it('should get all words', (done) => {
       request
-        .get('/api/v1/words')
+        .get('api/v1/words')
         .expect(200)
         .then((res) => {
           expect(res.body.results).to.be.equal(1);
@@ -53,7 +50,7 @@ describe('words', () => {
   describe('DELETE words', () => {
     it('should delete the test word', (done) => {
       request
-        .delete(`/api/v1/words/${testWordId}`)
+        .delete(`api/v1/words/${testWordId}`)
         .expect(204)
         .then((res) => {
           expect(res.body.data).to.be.equal(undefined);
