@@ -10,9 +10,9 @@ const url = `http://127.0.0.1:${process.env.PORT}/`;
 
 const request = supertest(url);
 
-// before(() => {});
-
 let testUserId;
+
+// before(() => {});
 
 describe('users', () => {
   describe('POST users', () => {
