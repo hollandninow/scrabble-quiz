@@ -40,7 +40,7 @@ describe('users', () => {
         .expect(201)
         .then((res) => {
           const { data } = res.body.data;
-          testUserId = data.id;
+          testUserId = data._id;
 
           expect(data.name).to.be.equal('Test');
           expect(data.email).to.be.equal('test@gmail.com');
@@ -55,6 +55,22 @@ describe('users', () => {
         .catch((err) => {
           done(err);
         });
+    });
+  });
+
+  describe('DELETE users', () => {
+    beforeEach(() => login());
+
+    it('should delete the test user', (done) => {
+      request
+        .delete(`api/v1/users/${testUserId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(204)
+        .then((res) => {
+          expect(res.body.data).to.be.equal(undefined);
+          done();
+        })
+        .catch((err) => done(err));
     });
   });
 });
