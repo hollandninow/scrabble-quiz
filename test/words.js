@@ -30,6 +30,7 @@ describe('words', () => {
     it('should create a word', (done) => {
       request
         .post('api/v1/words')
+        .set('Authorization', `Bearer ${token}`)
         .send({
           word: 'test',
           valid: 'true',
@@ -51,6 +52,7 @@ describe('words', () => {
     it('should get all words', (done) => {
       request
         .get('api/v1/words')
+        .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .then((res) => {
           expect(res.body.results).to.be.equal(1);
@@ -64,6 +66,7 @@ describe('words', () => {
     it('should delete the test word', (done) => {
       request
         .delete(`api/v1/words/${testWordId}`)
+        .set('Authorization', `Bearer ${token}`)
         .expect(204)
         .then((res) => {
           expect(res.body.data).to.be.equal(undefined);

@@ -24,9 +24,9 @@ const login = () =>
     });
 
 describe('users', () => {
-  describe('POST users', () => {
-    beforeEach(() => login());
+  beforeEach(() => login());
 
+  describe('POST users', () => {
     it('should sign up a new user', (done) => {
       request
         .post('api/v1/users')
@@ -59,8 +59,6 @@ describe('users', () => {
   });
 
   describe('DELETE users', () => {
-    beforeEach(() => login());
-
     it('should delete the test user', (done) => {
       request
         .delete(`api/v1/users/${testUserId}`)
