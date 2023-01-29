@@ -17,10 +17,11 @@ const testWord = {
 };
 
 const testWord2 = {
-  word: 'foo',
+  word: 'aa',
   valid: false,
   totalFlash: 1000,
   correctFlash: 8,
+  tags: ['3-letter'],
 };
 
 let testWordId;
@@ -104,10 +105,18 @@ describe('words', () => {
         .then((res) => {
           const { data } = res.body.data;
 
-          expect(data.word).to.not.equal(testWord.word);
+          expect(data.word).to.equal(testWord.word);
           expect(data.valid).to.not.equal(testWord.valid);
-          expect(data.word).to.be.equal(testWord2.word);
+          expect(data.wordLength).to.be.equal(testWord.word.length);
+
+          expect(data.word).to.not.equal(testWord2.word);
           expect(data.valid).to.be.equal(testWord2.valid);
+          expect(data.totalFlash).to.be.equal(testWord2.totalFlash);
+          expect(data.correctFlash).to.be.equal(testWord2.correctFlash);
+          expect(data.tags).to.be.deep.equal(testWord2.tags);
+          expect(data.accuracy).to.be.equal(
+            testWord2.correctFlash / testWord2.totalFlash
+          );
           done();
         })
         .catch((err) => done(err));

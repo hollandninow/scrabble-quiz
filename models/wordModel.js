@@ -8,6 +8,7 @@ const wordSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       minlength: [2, 'Word must be greater than 2 characters'],
+      immutable: true,
     },
     valid: {
       type: Boolean,
