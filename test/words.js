@@ -13,7 +13,14 @@ const adminTestUser = {
 
 const testWord = {
   word: 'test',
-  valid: 'true',
+  valid: true,
+};
+
+const testWord2 = {
+  word: 'foo',
+  valid: false,
+  totalFlash: 1000,
+  correctFlash: 8,
 };
 
 let testWordId;
@@ -58,6 +65,26 @@ describe('words', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.results).to.be.equal(1);
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
+  describe('PATCH words', () => {
+    it('should update the test word', (done) => {
+      request
+        .patch(`api/v1/words/${testWordId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(testWord2)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.word).to.not.equal(testWord.word);
+          expect(data.valid).to.not.equal(testWord.valid);
+          expect(data.word).to.be.equal(testWord2.word);
+          expect(data.valid).to.be.equal(testWord2.valid);
           done();
         })
         .catch((err) => done(err));
