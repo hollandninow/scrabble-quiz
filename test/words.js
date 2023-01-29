@@ -39,7 +39,7 @@ describe('words', () => {
   beforeEach(() => login());
 
   describe('POST words', () => {
-    it('should create a word', (done) => {
+    it('should create a test word', (done) => {
       request
         .post('api/v1/words')
         .set('Authorization', `Bearer ${token}`)
@@ -57,7 +57,7 @@ describe('words', () => {
     });
   });
 
-  describe('GET words', () => {
+  describe('GET all words', () => {
     it('should get all words', (done) => {
       request
         .get('api/v1/words')
@@ -65,6 +65,29 @@ describe('words', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.results).to.be.equal(1);
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
+  describe('GET word by id', () => {
+    it('should get all words', (done) => {
+      request
+        .get(`api/v1/words/${testWordId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.word).to.be.equal(testWord.word);
+          expect(data.valid).to.be.equal(testWord.valid);
+          expect(data.totalFlash).to.be.equal(0);
+          expect(data.correctFlash).to.be.equal(0);
+          expect(data.tags).to.be.empty;
+          expect(data.wordLength).to.be.equal(testWord.word.length);
+          expect(data.accuracy).to.be.equal(null);
+
           done();
         })
         .catch((err) => done(err));
