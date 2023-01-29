@@ -11,6 +11,13 @@ const adminTestUser = {
   password: process.env.ADMIN_TEST_PASSWORD,
 };
 
+const testUser = {
+  name: 'Test',
+  email: 'test@gmail.com',
+  password: 'test1234',
+  passwordConfirm: 'test1234',
+};
+
 let testUserId;
 let token;
 
@@ -31,20 +38,15 @@ describe('users', () => {
       request
         .post('api/v1/users')
         .set('Authorization', `Bearer ${token}`)
-        .send({
-          name: 'Test',
-          email: 'test@gmail.com',
-          password: 'test1234',
-          passwordConfirm: 'test1234',
-        })
+        .send(testUser)
         .expect(201)
         .then((res) => {
           const { data } = res.body.data;
           testUserId = data._id;
 
-          expect(data.name).to.be.equal('Test');
-          expect(data.email).to.be.equal('test@gmail.com');
-          expect(data.password).to.not.equal('test1234');
+          expect(data.name).to.be.equal(testUser.name);
+          expect(data.email).to.be.equal(testUser.email);
+          expect(data.password).to.not.equal(testUser.password);
           expect(data.passwordConfirm).to.equal(undefined);
           expect(data.role).to.be.equal('user');
           expect(data.active).to.be.equal(true);

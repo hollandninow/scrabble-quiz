@@ -11,6 +11,11 @@ const adminTestUser = {
   password: process.env.ADMIN_TEST_PASSWORD,
 };
 
+const testWord = {
+  word: 'test',
+  valid: 'true',
+};
+
 let testWordId;
 let token;
 
@@ -31,10 +36,7 @@ describe('words', () => {
       request
         .post('api/v1/words')
         .set('Authorization', `Bearer ${token}`)
-        .send({
-          word: 'test',
-          valid: 'true',
-        })
+        .send(testWord)
         .expect(201)
         .then((res) => {
           const { data } = res.body.data;
