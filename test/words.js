@@ -2,19 +2,30 @@
 
 const supertest = require('supertest');
 const { expect } = require('chai');
-const dotenv = require('dotenv');
-
-dotenv.config({ path: './config.env' });
 
 const url = `http://127.0.0.1:${process.env.PORT}/`;
-
 const request = supertest(url);
 
-// before(() => {});
+const adminTestUser = {
+  email: process.env.ADMIN_TEST,
+  password: process.env.ADMIN_TEST_PASSWORD,
+};
 
 let testWordId;
+let token;
+
+const login = () =>
+  request
+    .post('api/v1/users/login')
+    .send(adminTestUser)
+    .then((res) => {
+      // eslint-disable-next-line prefer-destructuring
+      token = res.body.token;
+    });
 
 describe('words', () => {
+  beforeEach(() => login());
+
   describe('POST words', () => {
     it('should create a word', (done) => {
       request
@@ -25,9 +36,11 @@ describe('words', () => {
         })
         .expect(201)
         .then((res) => {
-          expect(res.body.data.data.word).to.be.equal('test');
-          expect(res.body.data.data.valid).to.be.equal(true);
-          testWordId = res.body.data.data.id;
+          const { data } = res.body.data;
+
+          expect(data.word).to.be.equal('test');
+          expect(data.valid).to.be.equal(true);
+          testWordId = data.id;
           done();
         })
         .catch((err) => done(err));
