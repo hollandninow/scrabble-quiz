@@ -18,6 +18,12 @@ const testUser = {
   passwordConfirm: 'test1234',
 };
 
+const updatedTestUser = {
+  name: 'Test McPass',
+  email: 'test.mcpass@gmail.com',
+  role: 'admin',
+};
+
 let testUserId;
 let token;
 
@@ -49,14 +55,34 @@ describe('users', () => {
           expect(data.password).to.not.equal(testUser.password);
           expect(data.passwordConfirm).to.equal(undefined);
           expect(data.role).to.be.equal('user');
-          expect(data.active).to.be.equal(true);
-          expect(data.photo).to.be.equal('default.jpg');
+          expect(data.active).to.be.true;
+          expect(data.photo).to.equal('default.jpg');
 
           done();
         })
         .catch((err) => {
           done(err);
         });
+    });
+  });
+
+  describe('PATCH users', () => {
+    it('should update the test user', (done) => {
+      request
+        .patch(`api/v1/users/${testUserId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(updatedTestUser)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.name).to.be.equal(updatedTestUser.name);
+          expect(data.email).to.be.equal(updatedTestUser.email);
+          expect(data.role).to.be.equal(updatedTestUser.role);
+
+          done();
+        })
+        .catch((err) => done(err));
     });
   });
 
