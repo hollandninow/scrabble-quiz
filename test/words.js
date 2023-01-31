@@ -86,6 +86,7 @@ describe('words', () => {
           expect(data.tags).to.be.empty;
           expect(data.wordLength).to.be.equal(testWord.word.length);
           expect(data.accuracy).to.be.equal(null);
+          expect(data._id).to.be.equal(testWordId);
 
           done();
         })
