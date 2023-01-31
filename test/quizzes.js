@@ -22,6 +22,12 @@ const testQuiz = {
   // add user id once we create a user
 };
 
+const updatedTestQuiz = {
+  quizLength: 75,
+  quizType: '3-letter',
+  correctAnswers: 55,
+};
+
 const testUser = {
   name: 'Test',
   email: 'test@gmail.com',
@@ -115,6 +121,32 @@ describe('quizzes', () => {
             testQuiz.correctAnswers / testQuiz.quizLength
           );
           expect(data.id).to.be.equal(testQuizId);
+
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
+  describe('PATCH quiz', () => {
+    it('should update the test quiz with new data', (done) => {
+      request
+        .patch(`api/v1/quizzes/${testQuizId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .send(updatedTestQuiz)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.quizLength).to.be.equal(updatedTestQuiz.quizLength);
+          expect(data.quizType).to.be.equal(updatedTestQuiz.quizType);
+          expect(data.correctAnswers).to.be.equal(
+            updatedTestQuiz.correctAnswers
+          );
+          expect(data.score).to.be.equal(
+            updatedTestQuiz.correctAnswers / updatedTestQuiz.quizLength
+          );
+          expect(data._id).to.be.equal(testQuizId);
 
           done();
         })
