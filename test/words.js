@@ -37,7 +37,7 @@ const login = () =>
     });
 
 describe('words', () => {
-  beforeEach(() => login());
+  before(() => login());
 
   describe('POST words', () => {
     it('should create a test word', (done) => {

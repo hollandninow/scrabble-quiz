@@ -37,7 +37,7 @@ const login = () =>
     });
 
 describe('users', () => {
-  beforeEach(() => login());
+  before(() => login());
 
   describe('POST users', () => {
     it('should sign up a new user', (done) => {
