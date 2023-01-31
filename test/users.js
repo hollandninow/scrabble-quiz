@@ -53,7 +53,7 @@ describe('users', () => {
           expect(data.name).to.be.equal(testUser.name);
           expect(data.email).to.be.equal(testUser.email);
           expect(data.password).to.not.equal(testUser.password);
-          expect(data.passwordConfirm).to.equal(undefined);
+          expect(data.passwordConfirm).to.be.undefined;
           expect(data.role).to.be.equal('user');
           expect(data.active).to.be.true;
           expect(data.photo).to.equal('default.jpg');

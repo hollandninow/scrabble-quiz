@@ -93,10 +93,32 @@ describe('quizzes', () => {
         .expect(200)
         .then((res) => {
           expect(res.body.results).to.be.equal(1); // test quiz
+
+          done();
         })
         .catch((err) => done(err));
+    });
 
-      done();
+    it('should get the test quiz by id', (done) => {
+      request
+        .get(`api/v1/quizzes/${testQuizId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.quizLength).to.be.equal(testQuiz.quizLength);
+          expect(data.quizType).to.be.equal(testQuiz.quizType);
+          expect(data.correctAnswers).to.be.equal(testQuiz.correctAnswers);
+          expect(data.user).to.be.equal(testUserId);
+          expect(data.score).to.be.equal(
+            testQuiz.correctAnswers / testQuiz.quizLength
+          );
+          expect(data.id).to.be.equal(testQuizId);
+
+          done();
+        })
+        .catch((err) => done(err));
     });
   });
 
