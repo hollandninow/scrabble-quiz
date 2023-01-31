@@ -58,7 +58,7 @@ describe('words', () => {
     });
   });
 
-  describe('GET all words', () => {
+  describe('GET words', () => {
     it('should get all words', (done) => {
       request
         .get('api/v1/words')
@@ -70,10 +70,8 @@ describe('words', () => {
         })
         .catch((err) => done(err));
     });
-  });
 
-  describe('GET word by id', () => {
-    it('should get all words', (done) => {
+    it('should get the test word by id', (done) => {
       request
         .get(`api/v1/words/${testWordId}`)
         .set('Authorization', `Bearer ${token}`)

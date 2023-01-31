@@ -66,6 +66,41 @@ describe('users', () => {
     });
   });
 
+  describe('GET users', () => {
+    it('should get all users', (done) => {
+      request
+        .get('api/v1/users')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          expect(res.body.results).to.be.equal(2);
+
+          done();
+        })
+        .catch((err) => done(err));
+    });
+
+    it('should get the test user by id', (done) => {
+      request
+        .get(`api/v1/users/${testUserId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          const { data } = res.body.data;
+
+          expect(data.name).to.be.equal(testUser.name);
+          expect(data.email).to.be.equal(testUser.email);
+          expect(data.photo).to.be.equal('default.jpg');
+          expect(data.role).to.be.equal('user');
+          expect(data.quizTokens).to.be.deep.equal([]);
+          expect(data._id).to.be.equal(testUserId);
+
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
   describe('PATCH users', () => {
     it('should update the test user', (done) => {
       request
