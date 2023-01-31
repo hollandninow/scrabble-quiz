@@ -39,7 +39,7 @@ const login = () =>
 describe('words', () => {
   before(() => login());
 
-  describe('POST words', () => {
+  describe('POST word', () => {
     it('should create a test word', (done) => {
       request
         .post('api/v1/words')
@@ -58,7 +58,7 @@ describe('words', () => {
     });
   });
 
-  describe('GET words', () => {
+  describe('GET word(s)', () => {
     it('should get all words', (done) => {
       request
         .get('api/v1/words')
@@ -94,7 +94,7 @@ describe('words', () => {
     });
   });
 
-  describe('PATCH words', () => {
+  describe('PATCH word', () => {
     it('should update the test word', (done) => {
       request
         .patch(`api/v1/words/${testWordId}`)
@@ -122,14 +122,14 @@ describe('words', () => {
     });
   });
 
-  describe('DELETE words', () => {
+  describe('DELETE word', () => {
     it('should delete the test word', (done) => {
       request
         .delete(`api/v1/words/${testWordId}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(204)
         .then((res) => {
-          expect(res.body.data).to.be.equal(undefined);
+          expect(res.body.data).to.be.undefined;
           done();
         })
         .catch((err) => done(err));

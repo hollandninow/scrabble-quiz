@@ -84,4 +84,32 @@ describe('quizzes', () => {
         .catch((err) => done(err));
     });
   });
+
+  describe('GET quiz(zes)', () => {
+    it('should get all quizzes', (done) => {
+      request
+        .get('api/v1/quizzes')
+        .set('Authorization', `Bearer ${token}`)
+        .expect(200)
+        .then((res) => {
+          expect(res.body.results).to.be.equal(1); // test quiz
+        })
+        .catch((err) => done(err));
+
+      done();
+    });
+  });
+
+  describe('DELETE quiz', () => {
+    it('should delete the test quiz', (done) => {
+      request
+        .delete(`api/v1/quizzes/${testQuizId}`)
+        .set('Authorization', `Bearer ${token}`)
+        .expect(204)
+        .then((res) => {
+          expect(res.body.data).to.be.undefined;
+          done();
+        });
+    });
+  });
 });

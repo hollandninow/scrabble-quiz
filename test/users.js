@@ -39,7 +39,7 @@ const login = () =>
 describe('users', () => {
   before(() => login());
 
-  describe('POST users', () => {
+  describe('POST user', () => {
     it('should sign up a new user', (done) => {
       request
         .post('api/v1/users')
@@ -66,14 +66,14 @@ describe('users', () => {
     });
   });
 
-  describe('GET users', () => {
+  describe('GET user(s)', () => {
     it('should get all users', (done) => {
       request
         .get('api/v1/users')
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .then((res) => {
-          expect(res.body.results).to.be.equal(2);
+          expect(res.body.results).to.be.equal(2); // admin user and test user
 
           done();
         })
@@ -101,7 +101,7 @@ describe('users', () => {
     });
   });
 
-  describe('PATCH users', () => {
+  describe('PATCH user', () => {
     it('should update the test user', (done) => {
       request
         .patch(`api/v1/users/${testUserId}`)
@@ -121,14 +121,14 @@ describe('users', () => {
     });
   });
 
-  describe('DELETE users', () => {
+  describe('DELETE user', () => {
     it('should delete the test user', (done) => {
       request
         .delete(`api/v1/users/${testUserId}`)
         .set('Authorization', `Bearer ${token}`)
         .expect(204)
         .then((res) => {
-          expect(res.body.data).to.be.equal(undefined);
+          expect(res.body.data).to.be.undefined;
           done();
         })
         .catch((err) => done(err));
