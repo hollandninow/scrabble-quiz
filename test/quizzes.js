@@ -43,8 +43,7 @@ const createTestUser = () =>
     .then((res) => {
       testUserId = res.body.data.data._id;
       testQuiz.user = testUserId;
-    })
-    .catch((err) => console.log(err));
+    });
 
 const deleteTestUser = () =>
   request
