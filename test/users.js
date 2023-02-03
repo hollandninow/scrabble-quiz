@@ -27,7 +27,7 @@ const updatedTestUser = {
 let testUserId;
 let token;
 
-const login = () =>
+const loginAsAdmin = () =>
   request
     .post('api/v1/users/login')
     .send(adminTestUser)
@@ -37,7 +37,7 @@ const login = () =>
     });
 
 describe('users', () => {
-  before(() => login());
+  before(() => loginAsAdmin());
 
   describe('POST user', () => {
     it('should sign up a new user', (done) => {

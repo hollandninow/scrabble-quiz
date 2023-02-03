@@ -15,20 +15,71 @@ const adminTestUser = {
   password: process.env.ADMIN_TEST_PASSWORD,
 };
 
-let token;
+const testUser = {
+  name: 'Test',
+  email: 'test@gmail.com',
+  password: 'test1234',
+  passwordConfirm: 'test1234',
+};
+
+let testUserId;
+let testUserToken;
+let adminToken;
+
+const loginAsAdmin = () =>
+  request
+    .post('api/v1/users/login')
+    .send(adminTestUser)
+    .then((res) => {
+      // eslint-disable-next-line prefer-destructuring
+      adminToken = res.body.token;
+    });
+
+const deleteTestUser = () =>
+  request
+    .delete(`api/v1/users/${testUserId}`)
+    .set('Authorization', `Bearer ${adminToken}`);
 
 describe('authentication', () => {
+  before(() => loginAsAdmin());
+  after(() => deleteTestUser());
+
+  describe('sign up', () => {
+    it('should sign up a user when provided valid credentials', (done) => {
+      request
+        .post('api/v1/users/signup')
+        .send(testUser)
+        .expect(201)
+        .then((res) => {
+          const { user } = res.body.data;
+
+          testUserId = user._id;
+
+          expect(user.name).to.be.equal(testUser.name);
+          expect(user.email).to.be.equal(testUser.email);
+          expect(user.password).to.not.equal(testUser.password);
+          expect(user.passwordConfirm).to.be.undefined;
+          expect(user.role).to.be.equal('user');
+          expect(user.active).to.be.true;
+          expect(user.photo).to.equal('default.jpg');
+
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
+
   describe('logging in and out', () => {
     it('should log in when provided credentials for an existing user', (done) => {
       request
         .post('api/v1/users/login')
-        .send(adminTestUser)
+        .send(testUser)
         .expect(200)
         .then((res) => {
           // eslint-disable-next-line prefer-destructuring
-          token = res.body.token;
+          testUserToken = res.body.token;
 
-          expect(res.body.data.user.email).to.be.equal(adminTestUser.email);
+          expect(res.body.data.user.email).to.be.equal(testUser.email);
 
           done();
         })
@@ -38,7 +89,7 @@ describe('authentication', () => {
     it('should log out the user', (done) => {
       request
         .post('api/v1/users/logout')
-        .set('Authorization', `Bearer ${token}`)
+        .set('Authorization', `Bearer ${testUserToken}`)
         .expect(200)
         .then((res) => {
           done();

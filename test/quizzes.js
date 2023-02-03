@@ -50,7 +50,7 @@ const deleteTestUser = () =>
     .delete(`api/v1/users/${testUserId}`)
     .set('Authorization', `Bearer ${token}`);
 
-const login = () =>
+const loginAsAdmin = () =>
   request
     .post('api/v1/users/login')
     .send(adminTestUser)
@@ -60,7 +60,7 @@ const login = () =>
     });
 
 describe('quizzes', () => {
-  before(() => login());
+  before(() => loginAsAdmin());
   after(() => deleteTestUser());
 
   describe('POST quizzes', () => {
@@ -162,7 +162,8 @@ describe('quizzes', () => {
         .then((res) => {
           expect(res.body.data).to.be.undefined;
           done();
-        });
+        })
+        .catch((err) => done(err));
     });
   });
 });

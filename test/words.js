@@ -27,7 +27,7 @@ const testWord2 = {
 let testWordId;
 let token;
 
-const login = () =>
+const loginAsAdmin = () =>
   request
     .post('api/v1/users/login')
     .send(adminTestUser)
@@ -37,7 +37,7 @@ const login = () =>
     });
 
 describe('words', () => {
-  before(() => login());
+  before(() => loginAsAdmin());
 
   describe('POST word', () => {
     it('should create a test word', (done) => {
