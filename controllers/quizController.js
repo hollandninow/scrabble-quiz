@@ -10,20 +10,7 @@ exports.createQuiz = factory.createOne(Quiz);
 exports.updateQuiz = factory.updateOne(Quiz);
 exports.deleteQuiz = factory.deleteOne(Quiz);
 
-exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
-  const { quizType } = req.params;
-  const quizLength = +req.params.quizLength;
-
-  const maxQuizLength = process.env.MAX_QUIZ_LENGTH || 100;
-
-  if (quizLength > maxQuizLength)
-    return next(
-      new AppError(
-        `Quiz length too large. Please try again with size equal to or less than ${maxQuizLength}`,
-        400
-      )
-    );
-
+const buildQuiz = async (quizType, quizLength, quizToken) => {
   const wordList = await Word.aggregate([
     {
       $match: {
@@ -47,12 +34,29 @@ exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
     },
   ]);
 
-  const quizObj = {
+  return {
     wordList,
-    token: req.token,
+    token: quizToken,
     quizType,
     quizLength,
   };
+};
+
+exports.getGeneratedQuiz = catchAsync(async (req, res, next) => {
+  const { quizType } = req.params;
+  const quizLength = +req.params.quizLength;
+
+  const maxQuizLength = process.env.MAX_QUIZ_LENGTH || 100;
+
+  if (quizLength > maxQuizLength)
+    return next(
+      new AppError(
+        `Quiz length too large. Please try again with size equal to or less than ${maxQuizLength}`,
+        400
+      )
+    );
+
+  const quizObj = await buildQuiz(quizType, quizLength, req.token);
 
   res.status(200).json({
     status: 'success',
