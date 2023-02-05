@@ -97,4 +97,19 @@ describe('authentication', () => {
         .catch((err) => done(err));
     });
   });
+
+  describe('forgot password', () => {
+    it('should send an email to the user email', (done) => {
+      request
+        .post('api/v1/users/forgotpassword')
+        .expect(200)
+        .send({ email: testUser.email })
+        .then((res) => {
+          expect(res.body.message).to.be.equal('Token sent to email.');
+
+          done();
+        })
+        .catch((err) => done(err));
+    });
+  });
 });
