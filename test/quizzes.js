@@ -2,6 +2,10 @@
 
 const supertest = require('supertest');
 const { expect } = require('chai');
+// eslint-disable-next-line node/no-unpublished-require
+const rewire = require('rewire');
+
+const quizController = rewire('../controllers/quizController.js');
 
 const url = `http://127.0.0.1:${process.env.PORT}/`;
 const request = supertest(url);
@@ -35,6 +39,12 @@ const testUser = {
   passwordConfirm: 'test1234',
 };
 
+const testQuizOptions = {
+  quizType: '2-letter',
+  quizLength: 20,
+  quizToken: 'dummy',
+};
+
 const createTestUser = () =>
   request
     .post('api/v1/users')
@@ -62,6 +72,26 @@ const loginAsAdmin = () =>
 describe('quizzes', () => {
   before(() => loginAsAdmin());
   after(() => deleteTestUser());
+
+  describe('quiz generation', () => {
+    it('should build a quiz', (done) => {
+      const buildQuiz = quizController.__get__('buildQuiz');
+
+      buildQuiz(
+        testQuizOptions.quizType,
+        testQuizOptions.quizLength,
+        testQuizOptions.quizToken
+      )
+        .then((quiz) => {
+          expect(quiz.quizType).to.be.equal(testQuizOptions.quizType);
+          expect(quiz.quizLength).to.be.equal(testQuizOptions.quizLength);
+          expect(quiz.token).to.be.equal(testQuizOptions.quizToken);
+        })
+        .catch((err) => done(err));
+
+      done();
+    });
+  });
 
   describe('POST quizzes', () => {
     before(() => createTestUser());
