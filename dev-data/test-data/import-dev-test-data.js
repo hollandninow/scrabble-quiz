@@ -21,12 +21,21 @@ const validTwoLetterWords = JSON.parse(
   fs.readFileSync(`${__dirname}/test-2-letter-words--valid.json`, 'utf-8')
 );
 
+const validThreeLetterWords = JSON.parse(
+  fs.readFileSync(`${__dirname}/test-3-letter-words--valid.json`, 'utf-8')
+);
+
 validTwoLetterWords.forEach((word) => {
   word.valid = true;
   word.tags = ['2-letter'];
 });
 
-const validWords = [...validTwoLetterWords];
+validThreeLetterWords.forEach((word) => {
+  word.valid = true;
+  word.tags = ['3-letter'];
+});
+
+const validWords = [...validTwoLetterWords, ...validThreeLetterWords];
 
 const importData = async () => {
   try {

@@ -17,7 +17,7 @@ const testWord = {
 };
 
 const testWord2 = {
-  word: 'aa',
+  word: 'aaa',
   valid: false,
   totalFlash: 1000,
   correctFlash: 8,
@@ -65,7 +65,7 @@ describe('words', () => {
         .set('Authorization', `Bearer ${token}`)
         .expect(200)
         .then((res) => {
-          expect(res.body.results).to.be.equal(1);
+          expect(res.body.results).to.be.equal(100);
           done();
         })
         .catch((err) => done(err));

@@ -39,8 +39,15 @@ const testUser = {
   passwordConfirm: 'test1234',
 };
 
-const testQuizOptions = {
+const testQuizOptions1 = {
   quizType: '2-letter',
+  quizLength: 20,
+  quizToken: 'dummy',
+};
+
+// invalid test type
+const testQuizOptions2 = {
+  quizType: '1-letter',
   quizLength: 20,
   quizToken: 'dummy',
 };
@@ -74,18 +81,38 @@ describe('quizzes', () => {
   after(() => deleteTestUser());
 
   describe('quiz generation', () => {
-    it('should build a quiz', (done) => {
+    it('should build a quiz when given valid parameters', (done) => {
       const buildQuiz = quizController.__get__('buildQuiz');
 
       buildQuiz(
-        testQuizOptions.quizType,
-        testQuizOptions.quizLength,
-        testQuizOptions.quizToken
+        testQuizOptions1.quizType,
+        testQuizOptions1.quizLength,
+        testQuizOptions1.quizToken
       )
         .then((quiz) => {
-          expect(quiz.quizType).to.be.equal(testQuizOptions.quizType);
-          expect(quiz.quizLength).to.be.equal(testQuizOptions.quizLength);
-          expect(quiz.token).to.be.equal(testQuizOptions.quizToken);
+          expect(quiz.quizType).to.be.equal(testQuizOptions1.quizType);
+          expect(quiz.quizLength).to.be.equal(testQuizOptions1.quizLength);
+          expect(quiz.wordList.length).to.be.equal(testQuizOptions1.quizLength);
+          expect(quiz.token).to.be.equal(testQuizOptions1.quizToken);
+        })
+        .catch((err) => done(err));
+
+      done();
+    });
+
+    it('should build a quiz of length 0 when given invalid quizType', (done) => {
+      const buildQuiz = quizController.__get__('buildQuiz');
+
+      buildQuiz(
+        testQuizOptions2.quizType,
+        testQuizOptions2.quizLength,
+        testQuizOptions2.quizToken
+      )
+        .then((quiz) => {
+          expect(quiz.quizType).to.be.equal(testQuizOptions2.quizType);
+          expect(quiz.quizLength).to.be.equal(testQuizOptions2.quizLength);
+          expect(quiz.wordList.length).to.be.equal(0);
+          expect(quiz.token).to.be.equal(testQuizOptions2.quizToken);
         })
         .catch((err) => done(err));
 
