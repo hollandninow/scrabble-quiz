@@ -45,10 +45,17 @@ const testQuizOptions1 = {
   quizToken: 'dummy',
 };
 
-// invalid test type
+// invalid quizType
 const testQuizOptions2 = {
   quizType: '1-letter',
   quizLength: 20,
+  quizToken: 'dummy',
+};
+
+// invalid quizLength
+const testQuizOptions3 = {
+  quizType: '2-letter',
+  quizLength: -20,
   quizToken: 'dummy',
 };
 
@@ -113,6 +120,25 @@ describe('quizzes', () => {
           expect(quiz.quizLength).to.be.equal(testQuizOptions2.quizLength);
           expect(quiz.wordList.length).to.be.equal(0);
           expect(quiz.token).to.be.equal(testQuizOptions2.quizToken);
+        })
+        .catch((err) => done(err));
+
+      done();
+    });
+
+    it('should build a quiz with length 0 when given a negative (invalid) quiz length', (done) => {
+      const buildQuiz = quizController.__get__('buildQuiz');
+
+      buildQuiz(
+        testQuizOptions3.quizType,
+        testQuizOptions3.quizLength,
+        testQuizOptions3.quizToken
+      )
+        .then((quiz) => {
+          expect(quiz.quizType).to.be.equal(testQuizOptions3.quizType);
+          expect(quiz.quizLength).to.be.equal(testQuizOptions3.quizLength);
+          expect(quiz.wordList.length).to.be.equal(0);
+          expect(quiz.token).to.be.equal(testQuizOptions3.quizToken);
         })
         .catch((err) => done(err));
 
