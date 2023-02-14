@@ -52,6 +52,8 @@ const quizSchema = new mongoose.Schema(
   }
 );
 
+quizSchema.statics.quizTypes = quizTypes;
+
 quizSchema.virtual('score').get(function () {
   return this.correctAnswers / this.quizLength;
 });
@@ -62,4 +64,4 @@ quizSchema.methods.isValidQuizType = function (candidateQuizType) {
 
 const Quiz = mongoose.model('Quiz', quizSchema);
 
-module.exports = { Quiz, quizTypes };
+module.exports = Quiz;
