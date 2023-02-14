@@ -1,4 +1,4 @@
-const Quiz = require('../models/quizModel');
+const { Quiz, quizTypes } = require('../models/quizModel');
 const Word = require('../models/wordModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
@@ -12,6 +12,7 @@ exports.deleteQuiz = factory.deleteOne(Quiz);
 
 const buildQuiz = async (quizType, quizLength, quizToken) => {
   if (quizLength < 1) throw new AppError('Quiz length must be greater than 1.');
+  if (!quizTypes.includes(quizType)) throw new AppError('Invalid quiz type.');
 
   const wordList = await Word.aggregate([
     {

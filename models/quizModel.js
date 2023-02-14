@@ -62,4 +62,4 @@ quizSchema.methods.isValidQuizType = function (candidateQuizType) {
 
 const Quiz = mongoose.model('Quiz', quizSchema);
 
-module.exports = Quiz;
+module.exports = { Quiz, quizTypes };

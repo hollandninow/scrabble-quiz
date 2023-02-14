@@ -4,7 +4,6 @@ const supertest = require('supertest');
 const { expect } = require('chai');
 // eslint-disable-next-line node/no-unpublished-require
 const rewire = require('rewire');
-const AppError = require('../utils/appError');
 
 const quizController = rewire('../controllers/quizController.js');
 
@@ -108,23 +107,17 @@ describe('quizzes', () => {
       done();
     });
 
-    it('should build a quiz of length 0 when given invalid quizType', (done) => {
+    it('should throw an error when given an invalid quizType', (done) => {
       const buildQuiz = quizController.__get__('buildQuiz');
 
       buildQuiz(
         testQuizOptions2.quizType,
         testQuizOptions2.quizLength,
         testQuizOptions2.quizToken
-      )
-        .then((quiz) => {
-          expect(quiz.quizType).to.be.equal(testQuizOptions2.quizType);
-          expect(quiz.quizLength).to.be.equal(testQuizOptions2.quizLength);
-          expect(quiz.wordList.length).to.be.equal(0);
-          expect(quiz.token).to.be.equal(testQuizOptions2.quizToken);
-        })
-        .catch((err) => done(err));
-
-      done();
+      ).catch((err) => {
+        expect(err.message).to.be.equal('Invalid quiz type.');
+        done();
+      });
     });
 
     it('should throw an error when given a negative quiz length', (done) => {
