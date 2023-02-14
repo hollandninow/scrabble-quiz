@@ -11,6 +11,8 @@ exports.updateQuiz = factory.updateOne(Quiz);
 exports.deleteQuiz = factory.deleteOne(Quiz);
 
 const buildQuiz = async (quizType, quizLength, quizToken) => {
+  if (quizLength < 1) throw new AppError('Quiz length must be greater than 1.');
+
   const wordList = await Word.aggregate([
     {
       $match: {

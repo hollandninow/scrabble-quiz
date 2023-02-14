@@ -4,6 +4,7 @@ const supertest = require('supertest');
 const { expect } = require('chai');
 // eslint-disable-next-line node/no-unpublished-require
 const rewire = require('rewire');
+const AppError = require('../utils/appError');
 
 const quizController = rewire('../controllers/quizController.js');
 
@@ -126,23 +127,17 @@ describe('quizzes', () => {
       done();
     });
 
-    it('should build a quiz with length 0 when given a negative (invalid) quiz length', (done) => {
+    it('should throw an error when given a negative quiz length', (done) => {
       const buildQuiz = quizController.__get__('buildQuiz');
 
       buildQuiz(
         testQuizOptions3.quizType,
         testQuizOptions3.quizLength,
         testQuizOptions3.quizToken
-      )
-        .then((quiz) => {
-          expect(quiz.quizType).to.be.equal(testQuizOptions3.quizType);
-          expect(quiz.quizLength).to.be.equal(testQuizOptions3.quizLength);
-          expect(quiz.wordList.length).to.be.equal(0);
-          expect(quiz.token).to.be.equal(testQuizOptions3.quizToken);
-        })
-        .catch((err) => done(err));
-
-      done();
+      ).catch((err) => {
+        expect(err.message).to.be.equal('Quiz length must be greater than 1.');
+        done();
+      });
     });
   });
 
