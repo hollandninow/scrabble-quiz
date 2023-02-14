@@ -132,6 +132,19 @@ describe('quizzes', () => {
         done();
       });
     });
+
+    it('should throw an error when given a quizLength of 0', (done) => {
+      const buildQuiz = quizController.__get__('buildQuiz');
+
+      buildQuiz(testQuizOptions3.quizType, 0, testQuizOptions3.quizToken).catch(
+        (err) => {
+          expect(err.message).to.be.equal(
+            'Quiz length must be greater than 1.'
+          );
+          done();
+        }
+      );
+    });
   });
 
   describe('POST quizzes', () => {
