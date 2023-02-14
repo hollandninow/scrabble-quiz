@@ -58,10 +58,6 @@ quizSchema.virtual('score').get(function () {
   return this.correctAnswers / this.quizLength;
 });
 
-quizSchema.methods.isValidQuizType = function (candidateQuizType) {
-  return quizTypes.includes(candidateQuizType);
-};
-
 const Quiz = mongoose.model('Quiz', quizSchema);
 
 module.exports = Quiz;
