@@ -4,11 +4,12 @@ block content
   main.flex.overflow-hidden
     include _nav 
 
-    div.flex-col App container
-      header Header 
+    .flex-col
+      header
+        include _header
 
-      div.flex
-        div Quiz window 
+      .flex.h-full
+        div(class="basis-4/6") Quiz window 
 
-        div Quiz results
+        .bg-orange-200(class="basis-2/6") Quiz results
       
