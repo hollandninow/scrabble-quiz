@@ -25,7 +25,6 @@
   "author": "Holland Ninow",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.4.13",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -41,11 +40,9 @@
     "mongoose": "^6.8.1",
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
-    "postcss": "^8.4.21",
     "postcss-cli": "^10.1.0",
     "pug": "^3.0.2",
     "rewire": "^6.0.0",
-    "tailwindcss": "^3.2.4",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },
