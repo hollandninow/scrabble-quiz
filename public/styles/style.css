@@ -1,1 +1,36 @@
+/**********************/
+/* MAIN CONTAINER */
+/**********************/
+.container {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 14fr;
+  grid-template-columns: 1fr 6fr 2fr;
+}
 
+/**********************/
+/* HEADER */
+/**********************/
+.primary-header {
+  grid-column: 2 / span 2
+}
+
+/**********************/
+/* NAVIGATION */
+/**********************/
+.nav {
+  grid-row: 1 / span 2;
+}
+
+/**********************/
+/* QUIZ CONTAINER */
+/**********************/
+.quiz-container {
+}
+
+/**********************/
+/* QUIZ RESULTS */
+/**********************/
+.quiz-results-container {
+
+}

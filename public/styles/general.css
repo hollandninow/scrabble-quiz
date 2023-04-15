@@ -48,6 +48,10 @@ Default: 9px;
   box-sizing: inherit;
 }
 
+html, body {
+  height: 100vh;
+}
+
 html {
   font-size: 62.5%;
   overflow-x: hidden;
