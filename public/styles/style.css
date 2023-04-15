@@ -14,11 +14,14 @@
 .primary-header {
   grid-column: 2 / span 2;
 
+  font-weight: 600;
+  font-size: 2rem;
+
   padding: 1rem 1rem 1rem;
 }
 
 .primary-header__quiz-title {
-
+  font-weight: 400;
 }
 
 /**********************/

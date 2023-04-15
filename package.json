@@ -14,8 +14,6 @@
     "debug:prod": "SET NODE_ENV=production& ndb server.js",
     "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled",
     "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled",
-    "tailwind:build": "postcss public/styles/tailwind.css -o public/styles/style.css",
-    "tailwind:watch": "postcss public/styles/tailwind.css -w -o public/styles/style.css",
     "test": "NODE_ENV=testing mocha --recursive --exit --timeout 10000",
     "import:data": "node dev-data/data/import-dev-data.js --import",
     "delete:data": "node dev-data/data/import-dev-data.js --delete",
