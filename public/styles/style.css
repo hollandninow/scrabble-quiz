@@ -70,5 +70,9 @@
 /* QUIZ RESULTS */
 /**********************/
 .quiz-results-container {
+  padding: 1rem 2rem 1rem;
+}
 
+.results-header-1 {
+  
 }
