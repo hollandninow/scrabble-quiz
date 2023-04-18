@@ -74,5 +74,51 @@
 }
 
 .results-header-1 {
-  
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.results-list-legend {
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.results-list-item {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+
+  max-width: 60%;
+
+  font-size: 1.75rem;
+  font-weight: 500;
+
+  margin-bottom: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.results-list-item__word {
+  min-width: 6.5rem;
+  margin-left: 1rem;
+}
+
+.results-list-item__seperator {
+  min-width: 1rem;
+}
+
+.results-list-item__submitted-answer {
+  /* min-width: 6rem; */
+  margin-left: 1rem;
+}
+
+.quiz-results-icon {
+  height: 2.6rem;
+  width: 2.6rem;
+  color: #333;
+}
+
+.quiz-results-icon__incorrect {
+  color: rgba(255, 0, 0, 0.493);
 }
