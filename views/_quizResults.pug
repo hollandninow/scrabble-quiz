@@ -1,6 +1,13 @@
 .quiz-results-container.bg-color-secondary-1-0 
 
   h1.results-header-1 Your Results
+    .hover
+      ion-icon.quiz-results-icon.quiz-results-icon__info(name="information-circle-outline")
+      .tooltip.tooltip__point.bg-color-primary-1
+      .tooltip.tooltip__body.bg-color-primary-1 
+        | Results displayed as:
+        br 
+        | ( ✔ / ❌ ) word : your answer
 
   ol.results-list 
     //- span.results-list-legend ( word : answer ✔ / ❌ )
@@ -16,31 +23,31 @@
       span.results-list-item__submitted-answer true 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__incorrect(name="close-outline")
-      span.results-list-item__word word3
+      span.results-list-item__word cat
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer true 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__correct(name="checkmark-outline")
-      span.results-list-item__word word4
+      span.results-list-item__word dog
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer false 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__correct(name="checkmark-outline")
-      span.results-list-item__word word5
+      span.results-list-item__word bloopy
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer false 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__incorrect(name="close-outline")
-      span.results-list-item__word word6
+      span.results-list-item__word swoopy
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer true 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__incorrect(name="close-outline")
-      span.results-list-item__word word7
+      span.results-list-item__word moody
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer false 
     li.results-list-item 
       ion-icon.quiz-results-icon.quiz-results-icon__correct(name="checkmark-outline")
-      span.results-list-item__word word8
+      span.results-list-item__word superduper
       span.results-list-item__seperator :
       span.results-list-item__submitted-answer true 
