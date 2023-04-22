@@ -48,7 +48,7 @@
   font-size: 2rem;
   font-weight: 600;
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .nav__list {
@@ -61,7 +61,18 @@
 .nav__list-item {
   font-size: 1.5rem;
 
-  margin-bottom: 1.5rem;
+  padding: .75rem 1rem .75rem;
+  margin-bottom: .5rem;
+
+  transition: 0.15s;
+}
+
+.nav__list-item:hover {
+  cursor: pointer;
+
+  background-color: #FF9A56;
+  border-radius: 1rem;
+  box-shadow: 0 3px 5px rgba(78, 78, 78, 0.089);
 }
 
 /**********************/
@@ -82,6 +93,7 @@
 
   font-size: 2.5rem;
   font-weight: 600;
+  margin-top: 1rem;
   margin-bottom: 1.5rem;
   position: relative;
 }
