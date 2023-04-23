@@ -6,6 +6,8 @@
   display: grid;
   grid-template-rows: 1fr 14fr;
   grid-template-columns: 1fr 6fr 2fr;
+
+  overflow: hidden;
 }
 
 /**********************/
@@ -79,12 +81,14 @@
 /* QUIZ CONTAINER */
 /**********************/
 .quiz-container {
+  display: grid;
 }
 
 /**********************/
 /* QUIZ RESULTS */
 /**********************/
 .quiz-results-container {
+  overflow-y: auto;
   padding: 1rem 2rem 1rem;
 }
 
