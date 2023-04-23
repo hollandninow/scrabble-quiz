@@ -82,6 +82,40 @@
 /**********************/
 .quiz-container {
   display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  justify-content: center;
+  align-content: center;
+}
+
+.button__start-quiz {
+  visibility: hidden;
+
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 4rem 0rem 4rem;
+
+  font-size: 6rem;
+  font-weight: 600;
+
+  color: #93DBDE;
+
+  border-radius: 1rem;
+  box-shadow: 0 3px 5px rgba(78, 78, 78, 0.089);
+}
+
+.button__start-quiz:hover {
+  background-color: #0E5246;
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 5px 10px rgba(49, 49, 49, 0.089);
+  transition: 0.2s;
 }
 
 /**********************/
