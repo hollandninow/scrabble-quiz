@@ -87,6 +87,29 @@
 
   justify-content: center;
   align-content: center;
+
+  padding: 10rem 5rem;
+}
+
+.card {
+  border-radius: 1rem;
+  box-shadow: 0 3px 5px rgba(78, 78, 78, 0.089);
+
+  font-size: 6rem;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  margin: 4rem 0rem 4rem;
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 5px 10px rgba(49, 49, 49, 0.089);
+  transition: 0.2s;
 }
 
 .button__start-quiz {
@@ -95,27 +118,45 @@
   grid-row: 2 / span 1;
   grid-column: 2 / span 1;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  margin: 4rem 0rem 4rem;
-
-  font-size: 6rem;
-  font-weight: 600;
-
   color: #93DBDE;
-
-  border-radius: 1rem;
-  box-shadow: 0 3px 5px rgba(78, 78, 78, 0.089);
 }
 
 .button__start-quiz:hover {
   background-color: #0E5246;
-  cursor: pointer;
-  transform: scale(1.01);
-  box-shadow: 0 5px 10px rgba(49, 49, 49, 0.089);
-  transition: 0.2s;
+
+}
+
+.card__quiz-word {
+  color: #93DBDE;
+
+  grid-row: 1 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.button__answer {
+  color: #93DBDE;
+}
+
+.button__answer--true {
+  background-color: #247924b0;
+
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.button__answer--true:hover {
+  background-color: #57a357de;
+}
+
+.button__answer--false {
+  background-color: #f52626d7;
+
+  grid-row: 3 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.button__answer--false:hover {
+  background-color: #fc4f4ffb;
 }
 
 /**********************/
