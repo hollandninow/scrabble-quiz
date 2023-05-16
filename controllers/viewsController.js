@@ -9,3 +9,9 @@ exports.getAppView = catchAsync(async (req, res, next) => {
     title: 'App',
   });
 });
+
+exports.getLoginView = catchAsync(async (req,res, next) => {
+  res.status(200).render('login', {
+    title: 'Login',
+  })
+})

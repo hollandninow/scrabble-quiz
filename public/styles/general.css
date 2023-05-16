@@ -65,3 +65,35 @@ body {
   color: #555;
   overflow-x: hidden;
 }
+
+.button,
+.button:link,
+.button:visited { 
+  font-size: 1.6rem;
+  padding: 1.4rem 3rem;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.4s;
+  font-weight: 400;
+  backface-visibility: hidden;
+  border: none;
+  cursor: pointer;
+  border-radius: 1rem;
+  box-shadow: 0 3px 5px rgba(78, 78, 78, 0.089);
+}
+
+.button:hover {
+  cursor: pointer;
+  transform: scale(1.01);
+  box-shadow: 0 5px 10px rgba(49, 49, 49, 0.089);
+  transition: 0.2s;
+}
+
+.ma-bt-lg {
+  margin-bottom: 2rem;
+}
+
+.ma-bt-md {
+  margin-bottom: 1.5rem;
+}
