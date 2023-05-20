@@ -15,6 +15,8 @@ const wordRouter = require('./routers/wordRouter');
 const quizRouter = require('./routers/quizRouter');
 const userRouter = require('./routers/userRouter');
 
+const permittedSources = [];
+
 // Start express app
 const app = express();
 
@@ -31,10 +33,10 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
+        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:', 'https://unpkg.com/', 'https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js'],
         baseUri: ["'self'"],
         fontSrc: ["'self'", 'https:', 'data:'],
-        scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
+        scriptSrc: ["'self'", 'https:', 'http:', 'blob:', 'https://unpkg.com/axios/dist/axios.min.js'],
         frameSrc: ["'self'", 'https:', "'unsafe-inline'"],
         workerSrc: ["'self'", 'data:', 'blob:'],
       },

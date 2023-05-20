@@ -2,8 +2,9 @@
   "name": "scrabble-quiz",
   "version": "1.0.0",
   "description": "Flash card quiz app to train Scrabble words",
+  "main": "server.js",
   "engines": {
-    "node": ">=8.3.0"
+    "node": "^16"
   },
   "scripts": {
     "start": "SET NODE_ENV=production& node server.js",
@@ -12,8 +13,8 @@
     "start:test": "SET NODE_ENV=testing& nodemon server.js",
     "debug": "ndb server.js",
     "debug:prod": "SET NODE_ENV=production& ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled",
-    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled",
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --public-url /js --out-file bundle.js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --public-url /js --out-file bundle.js",
     "test": "NODE_ENV=testing mocha --recursive --exit --timeout 10000",
     "import:data": "node dev-data/data/import-dev-data.js --import",
     "delete:data": "node dev-data/data/import-dev-data.js --delete",
@@ -23,6 +24,8 @@
   "author": "Holland Ninow",
   "license": "ISC",
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
+    "axios": "^1.1.2",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -38,6 +41,7 @@
     "mongoose": "^6.8.1",
     "morgan": "^1.10.0",
     "nodemailer": "^6.8.0",
+    "parcel-bundler": "^1.12.3",
     "postcss-cli": "^10.1.0",
     "pug": "^3.0.2",
     "rewire": "^6.0.0",
@@ -63,7 +67,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
     "mocha": "^10.2.0",
-    "parcel": "^2.8.2",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.4",
     "supertest": "^6.3.3"
