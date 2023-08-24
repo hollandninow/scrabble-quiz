@@ -33,10 +33,10 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:', 'https://unpkg.com/', 'https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.2/axios.min.js'],
+        defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
         baseUri: ["'self'"],
         fontSrc: ["'self'", 'https:', 'data:'],
-        scriptSrc: ["'self'", 'https:', 'http:', 'blob:', 'https://unpkg.com/axios/dist/axios.min.js'],
+        scriptSrc: ["'self'", 'https:', 'http:', 'blob:'],
         frameSrc: ["'self'", 'https:', "'unsafe-inline'"],
         workerSrc: ["'self'", 'data:', 'blob:'],
       },
