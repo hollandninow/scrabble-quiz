@@ -8,7 +8,7 @@ const router = express.Router();
 router.use('/:userId/quizzes', quizRouter);
 
 router.post('/login', authController.login);
-router.post('/logout', authController.logout);
+router.get('/logout', authController.logout);
 
 router.post('/signup', authController.signup);
 
