@@ -1,8 +1,10 @@
 /* eslint-disable */
-import { login } from './login'
+import { login, logout } from './login'
 
 // DOM elements
 const loginForm = document.querySelector('.form--login');
+
+const logoutBtn = document.querySelector('.btn__logout');
 
 // Delegation
 if (loginForm) {
@@ -13,3 +15,5 @@ if (loginForm) {
     login(email, password);
   })
 }
+
+if (logoutBtn) logoutBtn.addEventListener('click', logout);
